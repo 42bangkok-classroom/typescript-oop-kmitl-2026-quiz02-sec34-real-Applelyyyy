@@ -44,20 +44,11 @@ export async function getPostalAddress():Promise<User[]> {
         if (!users || users.length === 0){  
             return []
         }
-        return users.map(u => ({
+        return users.map((u:ApiUser) => ({
             id: u.id,
             name: u.name,
             phone: u.phone,
-            address: u.address ? {
-                street: u.address.street,
-                suite: u.address.suite,
-                city: u.address.city,
-                zipcode: u.address.zipcode,
-                geo: {
-                    lat: u.address.geo.lat,
-                    lng: u.address.geo.lng
-                }
-            } : null
+            address: u.address ?? null
         }))
     }catch(error){
         return []
