@@ -51,18 +51,20 @@ export async function getTodosByUserId(id:number){
         ]);
         const users = usersResponse.data
         const todos = todosResponse.data
-        const user_data = users.filter(f => f.id === id)
-        const userTodos = todos.filter(ff => ff.userId === id)
-        if(user_data.length == 1){
-          return user_data.map(filtered => ({
-            id: filtered.id,
-            name: filtered.name,
-            address: filtered.address ?? null,
-            phone: filtered.phone,
-            todos: userTodos
-          }))[0]
-        }else{
+        const user = users.find(f => f.id === id)
+        
+        if(!user){
           return "Invalid id"
+        }
+        
+        const userTodos = todos.filter(ff => ff.userId === id)
+        
+        return {
+          id: user.id,
+          name: user.name,
+          address: user.address || null,
+          phone: user.phone,
+          todos: userTodos
         }
     }catch(error){
         return "Invalid id"
