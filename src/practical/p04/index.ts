@@ -23,7 +23,8 @@ export async function getTodosByUserId(id:number){
     let todos_data = await Todos()
     let filterUserById = users_data.filter(users => users.id === id)
     let filterTodosById = todos_data.filter(todo => todo.userId === id)
-    if(filterUserById.length == 1){
+    if (!filterTodosById) filterTodosById = [];
+    if(filterUserById.length == 1 && filterUserById[0].name !== undefined && filterUserById[0].phone !== undefined && filterUserById[0].address !== null){
       return {
         ...filterUserById[0],
         todos:filterTodosById
