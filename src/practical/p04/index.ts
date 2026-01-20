@@ -64,7 +64,7 @@ export async function getTodosByUserId(id:number){
           name: user.name,
           address: user.address || null,
           phone: user.phone,
-          todos: userTodos
+          todos: userTodos || [],
         }
     }catch(error){
         return "Invalid id"
