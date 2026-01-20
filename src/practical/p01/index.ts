@@ -39,11 +39,8 @@ interface ApiUser {
 
 export async function getPostalAddress():Promise<User[]> {
     try{
-        const response = await axios.get<ApiUser[]>('https://jsonplaceholder.typicode.com/users')
-        const users = response.data
-        if (!users || users.length === 0){  
-            return []
-        }
+        let response = await axios.get<ApiUser[]>('https://jsonplaceholder.typicode.com/users')
+        const users = Array.isArray(response?.data) ? response.data : []
         return users.map((u:ApiUser) => ({
             id: u.id,
             name: u.name,
