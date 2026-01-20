@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { getPostalAddress } from '../p01';
-interface Todos {
+
+interface Todo {
   userId: number
   id: number
   title: string
   completed: boolean
 }
-
 export async function Todos() {
   try{
-    let todos_respont = await axios.get<Todos>("https://jsonplaceholder.typicode.com/todos")
+    let todos_respont = await axios.get<Todo>("https://jsonplaceholder.typicode.com/todos")
     const todos_data = Array.isArray(todos_respont?.data) ? todos_respont.data : []
     return todos_data
-  }catch(error){
-    return []
+  }catch(err){
+    return [];
   }
 }
 
@@ -24,6 +24,9 @@ export async function getTodosByUserId(id:number){
     let filterUserById = users_data.filter(users => users.id === id)
     let filterTodosById = todos_data.filter(todo => todo.userId === id)
     if(filterUserById.length == 1){
+      if(filterTodosById.length === 0 || !filterUserById[0].address || (Array.isArray(filterUserById[0].address) && filterUserById[0].address.length === 0)) {
+        return "Invalid id"
+      }
       return {
         ...filterUserById[0],
         todos:filterTodosById
@@ -33,6 +36,6 @@ export async function getTodosByUserId(id:number){
       return "Invalid id"
     }
   }catch(err){
-    return []
+    return [];
   }
 }
