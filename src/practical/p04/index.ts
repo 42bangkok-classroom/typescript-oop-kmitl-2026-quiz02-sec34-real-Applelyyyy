@@ -17,7 +17,7 @@ interface User  {
   geo: {
       lat: string
       lng: string }
-  } | null
+  } | []
   phone: string
   website: string
 }
@@ -32,14 +32,9 @@ export async function getTodosByUserId(id:number){
     let filterUserById = users_data.filter(users => users.id === id)
     let filterTodosById = todos_data.filter(todo => todo.userId === id)
     if(filterUserById.length == 1){
-      const { id, name, address, phone } = filterUserById[0];
-      return {
-        id,
-        name,
-        address,
-        phone,
-        todos: filterTodosById
-      }
+      const { id, name, address, phone } = filterUserById[0]
+      const result = { id, name, address, phone, todos: filterTodosById }
+      return result
     }
     else{
       return "Invalid id"
