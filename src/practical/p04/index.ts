@@ -24,9 +24,6 @@ export async function getTodosByUserId(id:number){
     let filterUserById = users_data.filter(users => users.id === id)
     let filterTodosById = todos_data.filter(todo => todo.userId === id)
     if(filterUserById.length == 1){
-      if(filterTodosById.length === 0 || !filterUserById[0].address || (Array.isArray(filterUserById[0].address) && filterUserById[0].address.length === 0)) {
-        return "Invalid id"
-      }
       return {
         ...filterUserById[0],
         todos:filterTodosById
