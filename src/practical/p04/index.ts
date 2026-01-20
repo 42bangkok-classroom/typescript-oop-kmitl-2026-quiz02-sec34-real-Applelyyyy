@@ -52,19 +52,20 @@ export async function getTodosByUserId(id:number){
         const users = usersResponse.data
         const todos = todosResponse.data
         const user = users.find(f => f.id === id)
-        
-        if(!user){
+        let userTodos = todos.filter(ff => ff.userId === id)
+        if(!user || !user.address){
           return "Invalid id"
         }
-        
-        const userTodos = todos.filter(ff => ff.userId === id)
+        if (!userTodos){
+          userTodos = []
+        }
         
         return {
           id: user.id,
           name: user.name,
           address: user.address || null,
           phone: user.phone,
-          todos: userTodos || [],
+          todos: userTodos,
         }
     }catch(error){
         return "Invalid id"
