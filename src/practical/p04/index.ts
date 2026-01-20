@@ -57,7 +57,7 @@ export async function getTodosByUserId(id:number){
           return user_data.map(filtered => ({
             id: filtered.id,
             name: filtered.name,
-            address: filtered.address,
+            address: filtered.address ?? null,
             phone: filtered.phone,
             todos: userTodos
           }))[0]
